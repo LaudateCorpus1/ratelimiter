@@ -112,8 +112,8 @@ func (c *Cache) Incr(key interface{}, maxValue int) (uint64, bool) {
 
 // Get looks up a key's value from the cache.
 func (c *Cache) Get(key interface{}) (value uint64, ok bool) {
-	c.lock.Lock()
-	defer c.lock.Unlock()
+	c.lock.RLock()
+	defer c.lock.RUnlock()
 
 	if ent, ok := c.cache[key]; ok {
 		c.evictList.MoveToFront(ent)
