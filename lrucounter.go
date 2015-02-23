@@ -130,7 +130,9 @@ func (c *Cache) Remove(key interface{}) {
 	if ent, ok := c.cache[key]; ok {
 		c.removeElement(ent)
 	}
-} // Len returns the number of items in the cache.
+}
+
+// Len returns the number of items in the cache.
 func (c *Cache) Len() int {
 	c.lock.RLock()
 	defer c.lock.RUnlock()
