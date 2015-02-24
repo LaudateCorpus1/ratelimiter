@@ -45,4 +45,4 @@ That will effectively say for the lifetime of the process if you hit the rate li
 
 Performance
 --------
-Approximately 2.7 Incr operations per second on a standard 2014 macbook pro
+Approximately 3.2MM Incr operations per second on a standard 2014 macbook pro
