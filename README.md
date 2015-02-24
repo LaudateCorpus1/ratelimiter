@@ -25,24 +25,25 @@ Features
 Example of correct usage where you want to only allow 1000 requests per hour for a given key. Note: If you want to disable lifting the rate period set ratePeriod := 0
 That will effectively say for the lifetime of the process if you hit the rate limit you're done. 
 ```go
-  import "github.com/CrowdStrike/ratelimiter"
 
-    maxCapacity := 1000
-	ratePeriod := 1 * time.Hour
-	rl, err := ratelimiter.New(maxCapacity, ratePeriod)
-	if err != nil {
-		fmt.Printf("Unable to create cache")
-	}
+import "github.com/CrowdStrike/ratelimiter"
 
-	userKey := "user123"
-	maxCount = 100 // the maximum number of items I want from this user in one hour
-	cnt, underRateLimit := rl.Incr(userKey, maxCount)
-	if underRateLimit {
-		// allow further access
-		...
-	} else {
-		fmt.Printf("User [%s] is over rate limit, denying for now, current count [%d]", userKey, cnt)
-	}
+maxCapacity := 1000
+ratePeriod := 1 * time.Hour
+rl, err := ratelimiter.New(maxCapacity, ratePeriod)
+if err != nil {
+	fmt.Printf("Unable to create cache")
+}
+
+userKey := "user123"
+maxCount = 100 // the maximum number of items I want from this user in one hour
+cnt, underRateLimit := rl.Incr(userKey, maxCount)
+if underRateLimit {
+	// allow further access
+	...
+} else {
+	fmt.Printf("User [%s] is over rate limit, denying for now, current count [%d]", userKey, cnt)
+}
 ```
 
 Performance
@@ -52,7 +53,7 @@ Approximately 3.2MM Incr operations per second on a standard 2014 macbook pro
 ```
 BenchmarkIncrWithPeriod 5000000       308 ns/op
 BenchmarkIncrWithoutPeriod 5000000    253 ns/op
-BenchmarkGet10000000                  174 ns/op
+BenchmarkGet 10000000                 174 ns/op
 ```
 
 3.2MM ops / second is more than enough for our needs, but should someone need more we've found adding more selective locking mechanics can be implemented and using the `sync/atomic` package can be used for a ~50% speed up at a minor cost of readability
