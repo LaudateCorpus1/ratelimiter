@@ -48,3 +48,11 @@ That will effectively say for the lifetime of the process if you hit the rate li
 Performance
 --------
 Approximately 3.2MM Incr operations per second on a standard 2014 macbook pro
+
+```
+BenchmarkIncrWithPeriod 5000000       308 ns/op
+BenchmarkIncrWithoutPeriod 5000000    253 ns/op
+BenchmarkGet10000000                  174 ns/op
+```
+
+3.2MM ops / second is more than enough for our needs, but should someone need more we've found adding more selective locking mechanics can be implemented and using the `sync/atomic` package can be used for a ~50% speed up at a minor cost of readability
