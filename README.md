@@ -22,7 +22,7 @@ Features
 * You can set a maxsize so your memory footprint can remain constant, most used keys stay hot in cache
 
 
-Example of correct usage where you want to only allow 100 requests per hour for a given key. Note: If you want to disable lifting the rate period set ratePeriod := 0
+Example of correct usage where you want to only allow 1000 requests per hour for a given key. Note: If you want to disable lifting the rate period set ratePeriod := 0
 That will effectively say for the lifetime of the process if you hit the rate limit you're done. 
 ```go
     maxCapacity := 1000
