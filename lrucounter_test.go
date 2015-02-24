@@ -198,6 +198,35 @@ func TestRateLimitGetsRemoved(t *testing.T) {
 
 }
 
+func TestOnEvictedCallback(t *testing.T) {
+
+	keys := []string{"foo", "bar", "baz"}
+
+	// We will only allow max items of 2, but will incr 3, so the first one in "foo" will be evicted and we should be notified
+	callback := func(key interface{}, value interface{}) {
+		if key.(string) != keys[0] {
+			t.Fatalf("Expected %s to be purged and sent in callback, got %s instead", keys[0], key.(string))
+		}
+	}
+
+	maxItemsInCache := 2
+	rl, _ := New(maxItemsInCache, 10*time.Second)
+	rl.OnEvicted = callback
+
+	for _, key := range keys {
+		_, _ = rl.Incr(key, 10)
+	}
+
+	// The other two keys should still be present with a count of 1
+	for _, key := range keys[1:] {
+		cnt, _ := rl.Get(key)
+		if cnt != 1 {
+			t.Fatalf("expected to get %s with a count of [1] but got [%d]", key, cnt)
+		}
+	}
+
+}
+
 // BENCHMARKS
 // go test -bench=. -run=XXX
 // on macbook pro ~2.7 million ops a second

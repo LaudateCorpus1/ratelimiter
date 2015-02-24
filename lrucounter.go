@@ -152,4 +152,7 @@ func (c *Cache) removeElement(e *list.Element) {
 	c.evictList.Remove(e)
 	kv := e.Value.(*entry)
 	delete(c.cache, kv.key)
+	if c.OnEvicted != nil {
+		c.OnEvicted(kv.key, interface{}(e))
+	}
 }
