@@ -25,9 +25,11 @@ Features
 Example of correct usage where you want to only allow 1000 requests per hour for a given key. Note: If you want to disable lifting the rate period set ratePeriod := 0
 That will effectively say for the lifetime of the process if you hit the rate limit you're done. 
 ```go
+  import "github.com/CrowdStrike/ratelimiter"
+
     maxCapacity := 1000
 	ratePeriod := 1 * time.Hour
-	rl, err := New(maxCapacity, ratePeriod)
+	rl, err := ratelimiter.New(maxCapacity, ratePeriod)
 	if err != nil {
 		fmt.Printf("Unable to create cache")
 	}
