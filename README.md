@@ -21,6 +21,10 @@ Features
 * Ability to disable time periods and say once you're ratelimited, you're done
 * You can set a maxsize so your memory footprint can remain constant, most used keys stay hot in cache
 
+Authors/Contributors
+----
+ * [Jim Plush] - Author/maintainer
+ * [Sean Berry] - contributor/reviewer
 
 Example of correct usage where you want to only allow 1000 requests per hour for a given key. Note: If you want to disable lifting the rate period set ratePeriod := 0
 That will effectively say for the lifetime of the process if you hit the rate limit you're done. 
@@ -57,3 +61,6 @@ BenchmarkGet 10000000                 174 ns/op
 ```
 
 3.2MM ops / second is more than enough for our needs, but should someone need more we've found adding more selective locking mechanics can be implemented and using the `sync/atomic` package can be used for a ~50% speed up at a minor cost of readability
+
+[Jim Plush]:http://jimplush.com
+[Sean Berry]:http://github.com/schleppy
