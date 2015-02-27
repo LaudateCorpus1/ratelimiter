@@ -1,6 +1,8 @@
 ratelimiter
 =====
 
+[![Build Status](https://travis-ci.org/CrowdStrike/ratelimiter.svg?branch=master)](https://travis-ci.org/CrowdStrike/ratelimiter)
+
 Package ratelimiter implements an LRU based ratelimiter for near-cache type workloads. It's aim is to marry LRU based local caching with Redis's INCR command for incrmenting counters. There are times during data processing where you'd like to be able to say things like "If I see this thing n times in an hour, I don't care about it anymore", or the classic API rate limiting example. Once you hit a certain level of throughput you'd also like to reduce your network hops over to a remote service. 
 This package aims to support both kids of workloads. To get the best and most accurate results it's assumed that your keys are partitioned in a way where the same calls go to the same box. The data used in ratelimiter is local to the machine it's on. It's also appromixation rate limiting vs keeping track of any time windows or exact time boundaries. 
 
