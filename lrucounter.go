@@ -7,7 +7,7 @@
 // There are situations where while processing data you only care about something the first
 // n times it happens. After that it's not as useful. Redis has a nice feature of it's incr command
 // that returns the current count. If you're lucky enough to have your data partitioned to a particular
-// node then you can utilze a local REDIS type incr command
+// node then you can utilize a local REDIS type incr command
 // You can use this pattern for basic Rate Limiting, by passing in the valid seconds a given count is good for
 // if it passes those seconds we zero out the counter again
 
